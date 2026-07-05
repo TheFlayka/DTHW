@@ -4,7 +4,6 @@ if (isNaN(PORT) || PORT < 0 || PORT > 65535) {
   console.error(`[CRITICAL, ${new Date().toISOString()}] Invalid PORT value: ${Bun.env.PORT}`)
   process.exit(1)
 }
-export { PORT }
 
 // Database URL var
 type PostgresUrl = `postgresql://${string}:${string}@${string}:${number}/${string}?schema=${string}`
@@ -18,7 +17,6 @@ if (!databaseUrl) {
 function isPostgresUrl(url: string): url is PostgresUrl {
   try {
     const parsedUrl = new URL(url)
-    console.log(parsedUrl)
     return (
       parsedUrl.protocol === 'postgresql:' &&
       parsedUrl.pathname.startsWith('/') &&
@@ -37,3 +35,5 @@ if (!isPostgresUrl(databaseUrl)) {
   )
   process.exit(1)
 }
+
+export { PORT, databaseUrl }
