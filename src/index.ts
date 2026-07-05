@@ -1,5 +1,5 @@
 // Check ENV variables
-import { portNum } from './shared/env.js'
+import { PORT } from './shared/env.js'
 
 // Hono
 import { Hono } from 'hono'
@@ -10,6 +10,6 @@ const app: HonoBase = new Hono()
 app.get('/', (c) => c.text('It is API of DTHW Backend!'))
 
 export default {
-  port: portNum,
+  port: PORT,
   fetch: app.fetch,
 }

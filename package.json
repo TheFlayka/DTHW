@@ -6,9 +6,11 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
+    "@types/pg": "^8.20.0",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",
     "prettier": "3.9.4",
+    "prisma": "^7.8.0",
     "typescript-eslint": "^8.62.1"
   },
   "peerDependencies": {
@@ -22,6 +24,9 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "hono": "^4.12.27"
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "hono": "^4.12.27",
+    "pg": "^8.22.0"
   }
 }
