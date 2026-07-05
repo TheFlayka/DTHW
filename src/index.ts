@@ -10,6 +10,6 @@ const app: HonoBase = new Hono()
 app.get('/', (c) => c.text('It is API of DTHW Backend!'))
 
 export default {
-	port: portNum,
-	fetch: app.fetch,
+  port: portNum,
+  fetch: app.fetch,
 }
