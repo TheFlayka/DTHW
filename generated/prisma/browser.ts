@@ -17,4 +17,13 @@ import * as Prisma from './internal/prismaNamespaceBrowser.ts'
 export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
-
+/**
+ * Model Docks
+ * 
+ */
+export type Docks = Prisma.DocksModel
+/**
+ * Model Suppliers
+ * 
+ */
+export type Suppliers = Prisma.SuppliersModel

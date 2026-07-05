@@ -6,3 +6,16 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Docks {
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model Suppliers {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @db.Timestamptz(3)
+  willCome DateTime @db.Timestamptz(3)
+  willLeave DateTime @db.Timestamptz(3)
+}
