@@ -1,7 +1,7 @@
 // Port var
 const PORT = parseInt(Bun.env.PORT || '3000', 10)
 if (isNaN(PORT) || PORT < 0 || PORT > 65535) {
-  console.error(`[CRITICAL, ${new Date().toISOString()}] Invalid PORT value: ${Bun.env.PORT}`)
+  console.error(`[${new Date().toISOString()} - CRITICAL] Invalid PORT value: ${Bun.env.PORT}`)
   process.exit(1)
 }
 
@@ -10,7 +10,7 @@ type PostgresUrl = `postgresql://${string}:${string}@${string}:${number}/${strin
 
 const databaseUrl = Bun.env.DATABASE_URL
 if (!databaseUrl) {
-  console.error(`[CRITICAL, ${new Date().toISOString()}] DATABASE_URL is not set.`)
+  console.error(`[${new Date().toISOString()} - CRITICAL] DATABASE_URL is not set.`)
   process.exit(1)
 }
 
@@ -31,7 +31,7 @@ function isPostgresUrl(url: string): url is PostgresUrl {
 
 if (!isPostgresUrl(databaseUrl)) {
   console.error(
-    `[CRITICAL, ${new Date().toISOString()}] Invalid DATABASE_URL value: ${databaseUrl}`,
+    `[${new Date().toISOString()} - CRITICAL] Invalid DATABASE_URL value: ${databaseUrl}`,
   )
   process.exit(1)
 }
