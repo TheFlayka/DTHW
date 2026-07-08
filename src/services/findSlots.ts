@@ -31,7 +31,7 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
     const suppliers = await prisma.suppliers.findMany({
       where: {
         willCome: {
-          gte: new Date(startDate),
+          gte: `${startDate.split('T')[0]}T00:00:00.000Z`,
           lte: new Date(endDate),
         },
       },

@@ -18,4 +18,5 @@ model Suppliers {
   createdAt DateTime @db.Timestamptz(3)
   willCome DateTime @db.Timestamptz(3)
   willLeave DateTime @db.Timestamptz(3)
+  timeSpent Int @default(0)
 }

@@ -605,7 +605,8 @@ export const SuppliersScalarFieldEnum = {
   name: 'name',
   createdAt: 'createdAt',
   willCome: 'willCome',
-  willLeave: 'willLeave'
+  willLeave: 'willLeave',
+  timeSpent: 'timeSpent'
 } as const
 
 export type SuppliersScalarFieldEnum = (typeof SuppliersScalarFieldEnum)[keyof typeof SuppliersScalarFieldEnum]

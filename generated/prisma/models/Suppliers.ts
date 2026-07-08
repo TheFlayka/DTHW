@@ -28,10 +28,12 @@ export type AggregateSuppliers = {
 
 export type SuppliersAvgAggregateOutputType = {
   id: number | null
+  timeSpent: number | null
 }
 
 export type SuppliersSumAggregateOutputType = {
   id: number | null
+  timeSpent: number | null
 }
 
 export type SuppliersMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type SuppliersMinAggregateOutputType = {
   createdAt: Date | null
   willCome: Date | null
   willLeave: Date | null
+  timeSpent: number | null
 }
 
 export type SuppliersMaxAggregateOutputType = {
@@ -48,6 +51,7 @@ export type SuppliersMaxAggregateOutputType = {
   createdAt: Date | null
   willCome: Date | null
   willLeave: Date | null
+  timeSpent: number | null
 }
 
 export type SuppliersCountAggregateOutputType = {
@@ -56,16 +60,19 @@ export type SuppliersCountAggregateOutputType = {
   createdAt: number
   willCome: number
   willLeave: number
+  timeSpent: number
   _all: number
 }
 
 
 export type SuppliersAvgAggregateInputType = {
   id?: true
+  timeSpent?: true
 }
 
 export type SuppliersSumAggregateInputType = {
   id?: true
+  timeSpent?: true
 }
 
 export type SuppliersMinAggregateInputType = {
@@ -74,6 +81,7 @@ export type SuppliersMinAggregateInputType = {
   createdAt?: true
   willCome?: true
   willLeave?: true
+  timeSpent?: true
 }
 
 export type SuppliersMaxAggregateInputType = {
@@ -82,6 +90,7 @@ export type SuppliersMaxAggregateInputType = {
   createdAt?: true
   willCome?: true
   willLeave?: true
+  timeSpent?: true
 }
 
 export type SuppliersCountAggregateInputType = {
@@ -90,6 +99,7 @@ export type SuppliersCountAggregateInputType = {
   createdAt?: true
   willCome?: true
   willLeave?: true
+  timeSpent?: true
   _all?: true
 }
 
@@ -185,6 +195,7 @@ export type SuppliersGroupByOutputType = {
   createdAt: Date
   willCome: Date
   willLeave: Date
+  timeSpent: number
   _count: SuppliersCountAggregateOutputType | null
   _avg: SuppliersAvgAggregateOutputType | null
   _sum: SuppliersSumAggregateOutputType | null
@@ -216,6 +227,7 @@ export type SuppliersWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
   willCome?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
   willLeave?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
+  timeSpent?: Prisma.IntFilter<"Suppliers"> | number
 }
 
 export type SuppliersOrderByWithRelationInput = {
@@ -224,6 +236,7 @@ export type SuppliersOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   willCome?: Prisma.SortOrder
   willLeave?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type SuppliersWhereUniqueInput = Prisma.AtLeast<{
@@ -235,6 +248,7 @@ export type SuppliersWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
   willCome?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
   willLeave?: Prisma.DateTimeFilter<"Suppliers"> | Date | string
+  timeSpent?: Prisma.IntFilter<"Suppliers"> | number
 }, "id">
 
 export type SuppliersOrderByWithAggregationInput = {
@@ -243,6 +257,7 @@ export type SuppliersOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   willCome?: Prisma.SortOrder
   willLeave?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
   _count?: Prisma.SuppliersCountOrderByAggregateInput
   _avg?: Prisma.SuppliersAvgOrderByAggregateInput
   _max?: Prisma.SuppliersMaxOrderByAggregateInput
@@ -259,6 +274,7 @@ export type SuppliersScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Suppliers"> | Date | string
   willCome?: Prisma.DateTimeWithAggregatesFilter<"Suppliers"> | Date | string
   willLeave?: Prisma.DateTimeWithAggregatesFilter<"Suppliers"> | Date | string
+  timeSpent?: Prisma.IntWithAggregatesFilter<"Suppliers"> | number
 }
 
 export type SuppliersCreateInput = {
@@ -266,6 +282,7 @@ export type SuppliersCreateInput = {
   createdAt: Date | string
   willCome: Date | string
   willLeave: Date | string
+  timeSpent?: number
 }
 
 export type SuppliersUncheckedCreateInput = {
@@ -274,6 +291,7 @@ export type SuppliersUncheckedCreateInput = {
   createdAt: Date | string
   willCome: Date | string
   willLeave: Date | string
+  timeSpent?: number
 }
 
 export type SuppliersUpdateInput = {
@@ -281,6 +299,7 @@ export type SuppliersUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willCome?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willLeave?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SuppliersUncheckedUpdateInput = {
@@ -289,6 +308,7 @@ export type SuppliersUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willCome?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willLeave?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SuppliersCreateManyInput = {
@@ -297,6 +317,7 @@ export type SuppliersCreateManyInput = {
   createdAt: Date | string
   willCome: Date | string
   willLeave: Date | string
+  timeSpent?: number
 }
 
 export type SuppliersUpdateManyMutationInput = {
@@ -304,6 +325,7 @@ export type SuppliersUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willCome?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willLeave?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SuppliersUncheckedUpdateManyInput = {
@@ -312,6 +334,7 @@ export type SuppliersUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willCome?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   willLeave?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SuppliersCountOrderByAggregateInput = {
@@ -320,10 +343,12 @@ export type SuppliersCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   willCome?: Prisma.SortOrder
   willLeave?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type SuppliersAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type SuppliersMaxOrderByAggregateInput = {
@@ -332,6 +357,7 @@ export type SuppliersMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   willCome?: Prisma.SortOrder
   willLeave?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type SuppliersMinOrderByAggregateInput = {
@@ -340,10 +366,12 @@ export type SuppliersMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   willCome?: Prisma.SortOrder
   willLeave?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type SuppliersSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -358,6 +386,7 @@ export type SuppliersSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   willCome?: boolean
   willLeave?: boolean
+  timeSpent?: boolean
 }, ExtArgs["result"]["suppliers"]>
 
 export type SuppliersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -366,6 +395,7 @@ export type SuppliersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   willCome?: boolean
   willLeave?: boolean
+  timeSpent?: boolean
 }, ExtArgs["result"]["suppliers"]>
 
 export type SuppliersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -374,6 +404,7 @@ export type SuppliersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   willCome?: boolean
   willLeave?: boolean
+  timeSpent?: boolean
 }, ExtArgs["result"]["suppliers"]>
 
 export type SuppliersSelectScalar = {
@@ -382,9 +413,10 @@ export type SuppliersSelectScalar = {
   createdAt?: boolean
   willCome?: boolean
   willLeave?: boolean
+  timeSpent?: boolean
 }
 
-export type SuppliersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "willCome" | "willLeave", ExtArgs["result"]["suppliers"]>
+export type SuppliersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "willCome" | "willLeave" | "timeSpent", ExtArgs["result"]["suppliers"]>
 
 export type $SuppliersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Suppliers"
@@ -395,6 +427,7 @@ export type $SuppliersPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     createdAt: Date
     willCome: Date
     willLeave: Date
+    timeSpent: number
   }, ExtArgs["result"]["suppliers"]>
   composites: {}
 }
@@ -823,6 +856,7 @@ export interface SuppliersFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Suppliers", 'DateTime'>
   readonly willCome: Prisma.FieldRef<"Suppliers", 'DateTime'>
   readonly willLeave: Prisma.FieldRef<"Suppliers", 'DateTime'>
+  readonly timeSpent: Prisma.FieldRef<"Suppliers", 'Int'>
 }
     
 

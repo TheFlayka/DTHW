@@ -3,6 +3,9 @@ import { Context, Hono } from 'hono'
 
 // Services
 import { findSlots } from './services/findSlots'
+import { addSupplier } from './services/addSupplier'
+import { getSupplier } from './services/getSupplier'
+import { deleteSupplier } from './services/deleteSupplier'
 
 const app = new Hono()
 
@@ -23,6 +26,21 @@ export interface IResponse {
 
 export interface IResponseWithData<T> extends IResponse {
   data: T
+}
+
+export interface IBodySupplier {
+  name: string
+  willCome: string
+  willLeave: string
+  timeSpent: number
+}
+
+export interface ISupplier extends IBodySupplier {
+  id: number
+  name: string
+  willCome: string
+  willLeave: string
+  timeSpent: number
 }
 
 app.get('/slots', async (c: Context) => {
@@ -86,6 +104,71 @@ app.get('/slots', async (c: Context) => {
   }
 
   const result = await findSlots(countOfBoxes, startDate, endDate)
+  return c.json(result, result.status)
+})
+
+app.post('/slots', async (c: Context) => {
+  const result = await addSupplier(await c.req.json())
+  return c.json(result, result.status)
+})
+
+app.get('/slots/:id', async (c: Context) => {
+  const paramId = c.req.param('id')
+  if (!paramId) {
+    return c.json(
+      {
+        message: 'Not found ID param',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse,
+      400,
+    )
+  }
+  const parsedId = parseInt(paramId, 10)
+  if (isNaN(parsedId)) {
+    return c.json(
+      {
+        message: 'ID is not a number',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse,
+      400,
+    )
+  }
+
+  const result = await getSupplier(parsedId)
+  return c.json(result, result.status)
+})
+
+app.delete('/slots/:id', async (c: Context) => {
+  const paramId = c.req.param('id')
+  if (!paramId) {
+    return c.json(
+      {
+        message: 'Not found ID param',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse,
+      400,
+    )
+  }
+  const parsedId = parseInt(paramId, 10)
+  if (isNaN(parsedId)) {
+    return c.json(
+      {
+        message: 'ID is not a number',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse,
+      400,
+    )
+  }
+
+  const result = await deleteSupplier(parsedId)
   return c.json(result, result.status)
 })
 
