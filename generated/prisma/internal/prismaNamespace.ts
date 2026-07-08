@@ -384,7 +384,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Docks: 'Docks',
   Suppliers: 'Suppliers'
 } as const
 
@@ -401,84 +400,10 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "docks" | "suppliers"
+    modelProps: "suppliers"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    Docks: {
-      payload: Prisma.$DocksPayload<ExtArgs>
-      fields: Prisma.DocksFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.DocksFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.DocksFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        findFirst: {
-          args: Prisma.DocksFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.DocksFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        findMany: {
-          args: Prisma.DocksFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>[]
-        }
-        create: {
-          args: Prisma.DocksCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        createMany: {
-          args: Prisma.DocksCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.DocksCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>[]
-        }
-        delete: {
-          args: Prisma.DocksDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        update: {
-          args: Prisma.DocksUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        deleteMany: {
-          args: Prisma.DocksDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.DocksUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.DocksUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>[]
-        }
-        upsert: {
-          args: Prisma.DocksUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocksPayload>
-        }
-        aggregate: {
-          args: Prisma.DocksAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDocks>
-        }
-        groupBy: {
-          args: Prisma.DocksGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocksGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.DocksCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocksCountAggregateOutputType> | number
-        }
-      }
-    }
     Suppliers: {
       payload: Prisma.$SuppliersPayload<ExtArgs>
       fields: Prisma.SuppliersFieldRefs
@@ -590,14 +515,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
-
-
-export const DocksScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
-} as const
-
-export type DocksScalarFieldEnum = (typeof DocksScalarFieldEnum)[keyof typeof DocksScalarFieldEnum]
 
 
 export const SuppliersScalarFieldEnum = {
@@ -799,7 +716,6 @@ export type PrismaClientOptions = ({
   queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
-  docks?: Prisma.DocksOmit
   suppliers?: Prisma.SuppliersOmit
 }
 

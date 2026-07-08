@@ -1,8 +1,15 @@
+// prisma
 import { prisma } from '../lib/prisma'
-import type { IBodySupplier, IResponse } from '../routes'
+// types
+import type { IResponse } from '../routes'
+import type { IBodySupplier } from '#shared/types'
 
 export async function addSupplier(body: IBodySupplier) {
   try {
+    // Algorithm:
+    // we find the nearest supplier who will come before new supplier, we check leaving of leftSupplier and coming new supplier and we must be sure that there is not any conflicts
+    // right supplier who will come after new supplier, we check his coming with new supplier leaving and we must be sure that there is not any conflicts
+
     // Checking left supplier
     const leftSupplier = await prisma.suppliers.findFirst({
       where: {
@@ -77,11 +84,9 @@ export async function addSupplier(body: IBodySupplier) {
       } satisfies IResponse
     }
 
-    const { timeSpent, ...data } = body
-
     await prisma.suppliers.create({
       data: {
-        ...data,
+        ...body,
         createdAt: new Date().toISOString(),
       },
     })
@@ -93,7 +98,10 @@ export async function addSupplier(body: IBodySupplier) {
       timestamp: new Date().toISOString(),
     } satisfies IResponse
   } catch (error) {
-    console.error(error)
+    console.error(
+      `[${new Date().toISOString()} - ERROR] Something is wrong in add-supplier service: `,
+      error,
+    )
     return {
       message: 'Error occurred while adding supplier',
       status: 500,

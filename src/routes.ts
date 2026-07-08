@@ -1,5 +1,6 @@
 // Hono
 import { Context, Hono } from 'hono'
+const app = new Hono()
 
 // Services
 import { findSlots } from './services/findSlots'
@@ -7,8 +8,13 @@ import { addSupplier } from './services/addSupplier'
 import { getSupplier } from './services/getSupplier'
 import { deleteSupplier } from './services/deleteSupplier'
 
-const app = new Hono()
+// Shares function
+import { parseIntFunction } from '#shared/parseIntFunction'
 
+//types
+import type { IBodySupplier } from '#shared/types'
+
+// Special types for response object
 enum HTTPCodes {
   OK = 200,
   BAD_REQUEST = 400,
@@ -26,42 +32,36 @@ export interface IResponse {
 
 export interface IResponseWithData<T> extends IResponse {
   data: T
+} // It is necessary for special response with data
+
+function checkDates(firstDate: string, secondDate: string) {
+  return (
+    new Date(secondDate).getTime() > new Date().setMonth(new Date().getMonth() + 3) ||
+    new Date(firstDate).getTime() > new Date().setMonth(new Date().getMonth() + 3) || // StartDate and EndDate cannot be later than 3 month since current month
+    new Date(firstDate).getTime() > new Date(secondDate).getTime() // StartDate cannot be later than endDate
+  )
 }
 
-export interface IBodySupplier {
-  name: string
-  willCome: string
-  willLeave: string
-  timeSpent: number
-}
-
-export interface ISupplier extends IBodySupplier {
-  id: number
-  name: string
-  willCome: string
-  willLeave: string
-  timeSpent: number
-}
-
+// Routes
+// Find slots in db
 app.get('/slots', async (c: Context) => {
   // get count of boxes from query with checking and parsing it
-  const countString = c.req.query('countOfBoxes')
-  if (!countString) {
+  const countOfBoxes = parseIntFunction(c.req.query('countOfBoxes'))
+  if (countOfBoxes === false)
     return c.json(
       {
-        message: 'Not found query of count of boxes',
+        message: 'Query not found or it is not a number',
         status: 400,
         success: false,
         timestamp: new Date().toISOString(),
       } satisfies IResponse,
       400,
     )
-  }
-  const countOfBoxes = parseInt(countString, 10)
-  if (isNaN(countOfBoxes) || countOfBoxes < 1) {
+  // Count of boxes can't be less than one
+  if (countOfBoxes < 1) {
     return c.json(
       {
-        message: 'Count of boxes less than 1 or it is not a number',
+        message: 'Count of boxes less than 1',
         status: 400,
         success: false,
         timestamp: new Date().toISOString(),
@@ -83,14 +83,10 @@ app.get('/slots', async (c: Context) => {
     )
   }
 
-  const currentDate = new Date()
-
   if (
-    new Date(startDate).getDate() < currentDate.getDate() ||
-    new Date(endDate).getDate() < currentDate.getDate() ||
-    new Date(endDate).getTime() > new Date().setMonth(currentDate.getMonth() + 3) ||
-    new Date(startDate).getTime() > new Date().setMonth(currentDate.getMonth() + 3) ||
-    new Date(startDate).getTime() > new Date(endDate).getTime()
+    new Date(startDate).getDate() < new Date().getDate() ||
+    new Date(endDate).getDate() < new Date().getDate() || // StartDate and EndDate cannot be earlier than current date
+    checkDates(startDate, endDate)
   ) {
     return c.json(
       {
@@ -108,28 +104,36 @@ app.get('/slots', async (c: Context) => {
 })
 
 app.post('/slots', async (c: Context) => {
-  const result = await addSupplier(await c.req.json())
+  // checking body before adding supplier into db
+  // (validator will be add soon)
+  const body: IBodySupplier = await c.req.json()
+  if (
+    checkDates(body.willCome, body.willLeave) ||
+    new Date(body.willCome).getDate() !== new Date(body.willLeave).getDate() ||
+    new Date(body.willCome).getMonth() !== new Date(body.willLeave).getMonth() ||
+    new Date(body.willCome).getFullYear() !== new Date(body.willLeave).getFullYear()
+  ) {
+    return c.json(
+      {
+        message: 'WillCome and WillLeave is not good, please check data!',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse,
+      400,
+    )
+  }
+
+  const result = await addSupplier(body)
   return c.json(result, result.status)
 })
 
 app.get('/slots/:id', async (c: Context) => {
-  const paramId = c.req.param('id')
-  if (!paramId) {
+  const id = parseIntFunction(c.req.param('id'))
+  if (id === false) {
     return c.json(
       {
-        message: 'Not found ID param',
-        status: 400,
-        success: false,
-        timestamp: new Date().toISOString(),
-      } satisfies IResponse,
-      400,
-    )
-  }
-  const parsedId = parseInt(paramId, 10)
-  if (isNaN(parsedId)) {
-    return c.json(
-      {
-        message: 'ID is not a number',
+        message: 'Param ID is not found or it is not a number',
         status: 400,
         success: false,
         timestamp: new Date().toISOString(),
@@ -138,28 +142,16 @@ app.get('/slots/:id', async (c: Context) => {
     )
   }
 
-  const result = await getSupplier(parsedId)
+  const result = await getSupplier(id)
   return c.json(result, result.status)
 })
 
 app.delete('/slots/:id', async (c: Context) => {
-  const paramId = c.req.param('id')
-  if (!paramId) {
+  const id = parseIntFunction(c.req.param('id'))
+  if (id === false) {
     return c.json(
       {
-        message: 'Not found ID param',
-        status: 400,
-        success: false,
-        timestamp: new Date().toISOString(),
-      } satisfies IResponse,
-      400,
-    )
-  }
-  const parsedId = parseInt(paramId, 10)
-  if (isNaN(parsedId)) {
-    return c.json(
-      {
-        message: 'ID is not a number',
+        message: 'Param ID is not found or it is not a number',
         status: 400,
         success: false,
         timestamp: new Date().toISOString(),
@@ -168,7 +160,7 @@ app.delete('/slots/:id', async (c: Context) => {
     )
   }
 
-  const result = await deleteSupplier(parsedId)
+  const result = await deleteSupplier(id)
   return c.json(result, result.status)
 })
 

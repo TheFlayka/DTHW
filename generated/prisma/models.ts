@@ -8,6 +8,5 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Docks.ts'
 export type * from './models/Suppliers.ts'
 export type * from './commonInputTypes.ts'

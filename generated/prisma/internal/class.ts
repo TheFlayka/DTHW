@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.8.0",
   "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Docks {\n  id   Int    @id @default(autoincrement())\n  name String\n}\n\nmodel Suppliers {\n  id        Int      @id @default(autoincrement())\n  name      String\n  createdAt DateTime @db.Timestamptz(3)\n  willCome  DateTime @db.Timestamptz(3)\n  willLeave DateTime @db.Timestamptz(3)\n  timeSpent Int      @default(0)\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Suppliers {\n  id        Int      @id @default(autoincrement())\n  name      String\n  createdAt DateTime @db.Timestamptz(3)\n  willCome  DateTime @db.Timestamptz(3)\n  willLeave DateTime @db.Timestamptz(3)\n  timeSpent Int      @default(0)\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -32,10 +32,10 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Docks\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Suppliers\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"willCome\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"willLeave\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"timeSpent\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Suppliers\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"willCome\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"willLeave\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"timeSpent\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 config.parameterizationSchema = {
-  strings: JSON.parse("[\"where\",\"Docks.findUnique\",\"Docks.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"Docks.findFirst\",\"Docks.findFirstOrThrow\",\"Docks.findMany\",\"data\",\"Docks.createOne\",\"Docks.createMany\",\"Docks.createManyAndReturn\",\"Docks.updateOne\",\"Docks.updateMany\",\"Docks.updateManyAndReturn\",\"create\",\"update\",\"Docks.upsertOne\",\"Docks.deleteOne\",\"Docks.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"Docks.groupBy\",\"Docks.aggregate\",\"Suppliers.findUnique\",\"Suppliers.findUniqueOrThrow\",\"Suppliers.findFirst\",\"Suppliers.findFirstOrThrow\",\"Suppliers.findMany\",\"Suppliers.createOne\",\"Suppliers.createMany\",\"Suppliers.createManyAndReturn\",\"Suppliers.updateOne\",\"Suppliers.updateMany\",\"Suppliers.updateManyAndReturn\",\"Suppliers.upsertOne\",\"Suppliers.deleteOne\",\"Suppliers.deleteMany\",\"Suppliers.groupBy\",\"Suppliers.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"name\",\"createdAt\",\"willCome\",\"willLeave\",\"timeSpent\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
-  graph: "UBUgBSwAAEMAMC0AAAQAEC4AAEMAMC8CAAAAATABAEAAIQEAAAABACABAAAAAQAgBSwAAEMAMC0AAAQAEC4AAEMAMC8CAD8AITABAEAAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACACLwIAAAABMAEAAAABAQgAAAkAIAIvAgAAAAEwAQAAAAEBCAAACwAwAQgAAAsAMAIvAgBLACEwAQBJACECAAAAAQAgCAAADgAgAi8CAEsAITABAEkAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBRUAAEwAIBYAAE0AIBcAAFAAIBgAAE8AIBkAAE4AIAUsAABCADAtAAAXABAuAABCADAvAgA0ACEwAQA1ACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAksAAA-ADAtAAAdABAuAAA-ADAvAgAAAAEwAQBAACExQABBACEyQABBACEzQABBACE0AgA_ACEBAAAAGgAgAQAAABoAIAksAAA-ADAtAAAdABAuAAA-ADAvAgA_ACEwAQBAACExQABBACEyQABBACEzQABBACE0AgA_ACEAAwAAAB0AIAMAAB4AMAQAABoAIAMAAAAdACADAAAeADAEAAAaACADAAAAHQAgAwAAHgAwBAAAGgAgBi8CAAAAATABAAAAATFAAAAAATJAAAAAATNAAAAAATQCAAAAAQEIAAAiACAGLwIAAAABMAEAAAABMUAAAAABMkAAAAABM0AAAAABNAIAAAABAQgAACQAMAEIAAAkADAGLwIASwAhMAEASQAhMUAASgAhMkAASgAhM0AASgAhNAIASwAhAgAAABoAIAgAACcAIAYvAgBLACEwAQBJACExQABKACEyQABKACEzQABKACE0AgBLACECAAAAHQAgCAAAKQAgAgAAAB0AIAgAACkAIAMAAAAaACAPAAAiACAQAAAnACABAAAAGgAgAQAAAB0AIAUVAABEACAWAABFACAXAABIACAYAABHACAZAABGACAJLAAAMwAwLQAAMAAQLgAAMwAwLwIANAAhMAEANQAhMUAANgAhMkAANgAhM0AANgAhNAIANAAhAwAAAB0AIAMAAC8AMBQAADAAIAMAAAAdACADAAAeADAEAAAaACAJLAAAMwAwLQAAMAAQLgAAMwAwLwIANAAhMAEANQAhMUAANgAhMkAANgAhM0AANgAhNAIANAAhDRUAADgAIBYAAD0AIBcAADgAIBgAADgAIBkAADgAIDUCAAAAATYCAAAABDcCAAAABDgCAAAAATkCAAAAAToCAAAAATsCAAAAATwCADwAIQ4VAAA4ACAYAAA7ACAZAAA7ACA1AQAAAAE2AQAAAAQ3AQAAAAQ4AQAAAAE5AQAAAAE6AQAAAAE7AQAAAAE8AQA6ACE9AQAAAAE-AQAAAAE_AQAAAAELFQAAOAAgGAAAOQAgGQAAOQAgNUAAAAABNkAAAAAEN0AAAAAEOEAAAAABOUAAAAABOkAAAAABO0AAAAABPEAANwAhCxUAADgAIBgAADkAIBkAADkAIDVAAAAAATZAAAAABDdAAAAABDhAAAAAATlAAAAAATpAAAAAATtAAAAAATxAADcAIQg1AgAAAAE2AgAAAAQ3AgAAAAQ4AgAAAAE5AgAAAAE6AgAAAAE7AgAAAAE8AgA4ACEINUAAAAABNkAAAAAEN0AAAAAEOEAAAAABOUAAAAABOkAAAAABO0AAAAABPEAAOQAhDhUAADgAIBgAADsAIBkAADsAIDUBAAAAATYBAAAABDcBAAAABDgBAAAAATkBAAAAAToBAAAAATsBAAAAATwBADoAIT0BAAAAAT4BAAAAAT8BAAAAAQs1AQAAAAE2AQAAAAQ3AQAAAAQ4AQAAAAE5AQAAAAE6AQAAAAE7AQAAAAE8AQA7ACE9AQAAAAE-AQAAAAE_AQAAAAENFQAAOAAgFgAAPQAgFwAAOAAgGAAAOAAgGQAAOAAgNQIAAAABNgIAAAAENwIAAAAEOAIAAAABOQIAAAABOgIAAAABOwIAAAABPAIAPAAhCDUIAAAAATYIAAAABDcIAAAABDgIAAAAATkIAAAAAToIAAAAATsIAAAAATwIAD0AIQksAAA-ADAtAAAdABAuAAA-ADAvAgA_ACEwAQBAACExQABBACEyQABBACEzQABBACE0AgA_ACEINQIAAAABNgIAAAAENwIAAAAEOAIAAAABOQIAAAABOgIAAAABOwIAAAABPAIAOAAhCzUBAAAAATYBAAAABDcBAAAABDgBAAAAATkBAAAAAToBAAAAATsBAAAAATwBADsAIT0BAAAAAT4BAAAAAT8BAAAAAQg1QAAAAAE2QAAAAAQ3QAAAAAQ4QAAAAAE5QAAAAAE6QAAAAAE7QAAAAAE8QAA5ACEFLAAAQgAwLQAAFwAQLgAAQgAwLwIANAAhMAEANQAhBSwAAEMAMC0AAAQAEC4AAEMAMC8CAD8AITABAEAAIQAAAAAAAUABAAAAAQFAQAAAAAEFQAIAAAABQQIAAAABQgIAAAABQwIAAAABRAIAAAABAAAAAAAAAAAABRUABhYABxcACBgACRkACgAAAAAABRUABhYABxcACBgACRkACgAAAAUVABAWABEXABIYABMZABQAAAAAAAUVABAWABEXABIYABMZABQBAgECAwEFBgEGBwEHCAEJCgEKDAILDQMMDwENEQIOEgQREwESFAETFQIaGAUbGQscGwwdHAweHwwfIAwgIQwhIwwiJQIjJg0kKAwlKgImKw4nLAwoLQwpLgIqMQ8rMhU"
+  strings: JSON.parse("[\"where\",\"Suppliers.findUnique\",\"Suppliers.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"Suppliers.findFirst\",\"Suppliers.findFirstOrThrow\",\"Suppliers.findMany\",\"data\",\"Suppliers.createOne\",\"Suppliers.createMany\",\"Suppliers.createManyAndReturn\",\"Suppliers.updateOne\",\"Suppliers.updateMany\",\"Suppliers.updateManyAndReturn\",\"create\",\"update\",\"Suppliers.upsertOne\",\"Suppliers.deleteOne\",\"Suppliers.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"Suppliers.groupBy\",\"Suppliers.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"name\",\"createdAt\",\"willCome\",\"willLeave\",\"timeSpent\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
+  graph: "MAsQCRwAACUAMB0AAAQAEB4AACUAMB8CAAAAASABACcAISFAACgAISJAACgAISNAACgAISQCACYAIQEAAAABACABAAAAAQAgCRwAACUAMB0AAAQAEB4AACUAMB8CACYAISABACcAISFAACgAISJAACgAISNAACgAISQCACYAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAGHwIAAAABIAEAAAABIUAAAAABIkAAAAABI0AAAAABJAIAAAABAQgAAAkAIAYfAgAAAAEgAQAAAAEhQAAAAAEiQAAAAAEjQAAAAAEkAgAAAAEBCAAACwAwAQgAAAsAMAYfAgAwACEgAQAuACEhQAAvACEiQAAvACEjQAAvACEkAgAwACECAAAAAQAgCAAADgAgBh8CADAAISABAC4AISFAAC8AISJAAC8AISNAAC8AISQCADAAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBRUAACkAIBYAACoAIBcAAC0AIBgAACwAIBkAACsAIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjQAAdACEkAgAbACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjQAAdACEkAgAbACENFQAAHwAgFgAAJAAgFwAAHwAgGAAAHwAgGQAAHwAgJQIAAAABJgIAAAAEJwIAAAAEKAIAAAABKQIAAAABKgIAAAABKwIAAAABLAIAIwAhDhUAAB8AIBgAACIAIBkAACIAICUBAAAAASYBAAAABCcBAAAABCgBAAAAASkBAAAAASoBAAAAASsBAAAAASwBACEAIS0BAAAAAS4BAAAAAS8BAAAAAQsVAAAfACAYAAAgACAZAAAgACAlQAAAAAEmQAAAAAQnQAAAAAQoQAAAAAEpQAAAAAEqQAAAAAErQAAAAAEsQAAeACELFQAAHwAgGAAAIAAgGQAAIAAgJUAAAAABJkAAAAAEJ0AAAAAEKEAAAAABKUAAAAABKkAAAAABK0AAAAABLEAAHgAhCCUCAAAAASYCAAAABCcCAAAABCgCAAAAASkCAAAAASoCAAAAASsCAAAAASwCAB8AIQglQAAAAAEmQAAAAAQnQAAAAAQoQAAAAAEpQAAAAAEqQAAAAAErQAAAAAEsQAAgACEOFQAAHwAgGAAAIgAgGQAAIgAgJQEAAAABJgEAAAAEJwEAAAAEKAEAAAABKQEAAAABKgEAAAABKwEAAAABLAEAIQAhLQEAAAABLgEAAAABLwEAAAABCyUBAAAAASYBAAAABCcBAAAABCgBAAAAASkBAAAAASoBAAAAASsBAAAAASwBACIAIS0BAAAAAS4BAAAAAS8BAAAAAQ0VAAAfACAWAAAkACAXAAAfACAYAAAfACAZAAAfACAlAgAAAAEmAgAAAAQnAgAAAAQoAgAAAAEpAgAAAAEqAgAAAAErAgAAAAEsAgAjACEIJQgAAAABJggAAAAEJwgAAAAEKAgAAAABKQgAAAABKggAAAABKwgAAAABLAgAJAAhCRwAACUAMB0AAAQAEB4AACUAMB8CACYAISABACcAISFAACgAISJAACgAISNAACgAISQCACYAIQglAgAAAAEmAgAAAAQnAgAAAAQoAgAAAAEpAgAAAAEqAgAAAAErAgAAAAEsAgAfACELJQEAAAABJgEAAAAEJwEAAAAEKAEAAAABKQEAAAABKgEAAAABKwEAAAABLAEAIgAhLQEAAAABLgEAAAABLwEAAAABCCVAAAAAASZAAAAABCdAAAAABChAAAAAASlAAAAAASpAAAAAAStAAAAAASxAACAAIQAAAAAAATABAAAAAQEwQAAAAAEFMAIAAAABMQIAAAABMgIAAAABMwIAAAABNAIAAAABAAAAAAUVAAYWAAcXAAgYAAkZAAoAAAAAAAUVAAYWAAcXAAgYAAkZAAoBAgECAwEFBgEGBwEHCAEJCgEKDAILDQMMDwENEQIOEgQREwESFAETFQIaGAUbGQs"
 }
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
@@ -70,8 +70,8 @@ export interface PrismaClientConstructor {
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more Docks
-   * const docks = await prisma.docks.findMany()
+   * // Fetch zero or more Suppliers
+   * const suppliers = await prisma.suppliers.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -94,8 +94,8 @@ export interface PrismaClientConstructor {
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Docks
- * const docks = await prisma.docks.findMany()
+ * // Fetch zero or more Suppliers
+ * const suppliers = await prisma.suppliers.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -189,16 +189,6 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.docks`: Exposes CRUD operations for the **Docks** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Docks
-    * const docks = await prisma.docks.findMany()
-    * ```
-    */
-  get docks(): Prisma.DocksDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.suppliers`: Exposes CRUD operations for the **Suppliers** model.
     * Example usage:
     * ```ts

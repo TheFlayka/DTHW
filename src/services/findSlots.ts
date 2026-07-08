@@ -1,13 +1,11 @@
-// Special functions
-import { calculateTimeSpentInDock } from '#shared/calculateTime'
-
 // prisma
 import { prisma } from '../lib/prisma'
-
+// Shared function
+import { calculateTimeSpentInDock } from '#shared/calculateTime'
 // types
 import { type IResponse, type IResponseWithData } from '../routes'
 
-// Interfaces of response & Slot
+// Interfaces of Slot
 interface ISlot {
   canCome: string
   canLeave: string
@@ -18,9 +16,15 @@ interface IDataOfSlots {
   timeSpent: number
 }
 
-function isIntervalValid(interval: number) {
+// If our service find that interval less than 0(minus), it is bad data, so it is necessary to fix that in db!
+function isIntervalValid(interval: number, id1: number, id2?: number) {
   if (interval < 0) {
-    console.error(`[ERROR] In Databases were founded that interval is less than 0!`)
+    console.error(
+      `[${new Date().toISOString()} - ERROR] In Databases were founded that interval is less than 0! \n 
+      ID of first supplier: ${id1} \n
+      ID of second supplier: ${id2 ? id2 : 'it is morning/night'}
+      `,
+    )
   }
 }
 
@@ -28,6 +32,7 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
   try {
     const time = calculateTimeSpentInDock(countOfBoxes) // get time spent in the dock
 
+    // Getting all suppliers between startDate and endDAte
     const suppliers = await prisma.suppliers.findMany({
       where: {
         willCome: {
@@ -51,7 +56,7 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
     const slots: Array<ISlot> = []
     let lastDate: number = 0 // It helps with checking if we reached new day in iteration, so checking window in morning and night will be work!
 
-    // Iteration for getting interval and finding slots
+    // Iteration for finding available slots
     for (let i = 0; i < suppliers.length; i++) {
       const supplier = suppliers[i]
       if (!supplier) {
@@ -60,7 +65,6 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
 
       // checking window between start of the day and first supplier
       if (lastDate !== supplier.willCome.getDate()) {
-        // if it's true, we check
         const intervalBeforeFirstSupplier =
           supplier.willCome.getTime() -
           new Date(`${supplier.willCome.toISOString().split('T')[0]}T03:00:00.000Z`).getTime()
@@ -70,12 +74,12 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
             canLeave: supplier.willCome.toISOString(),
           })
         }
-        isIntervalValid(intervalBeforeFirstSupplier)
+        isIntervalValid(intervalBeforeFirstSupplier, supplier.id)
         lastDate = supplier.willCome.getDate()
         continue
       }
 
-      const previousLeave = supplier.willLeave.getTime()
+      const previousLeave = supplier.willLeave.getTime() // first supplier for checking interval
 
       // Night checking
       const nextSupplier = suppliers[i + 1]
@@ -89,12 +93,12 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
             canLeave: `${supplier.willCome.toISOString().split('T')[0]}T17:00:00.000Z`,
           })
         }
-        isIntervalValid(intervalBeforeNight)
+        isIntervalValid(intervalBeforeNight, supplier.id)
         lastDate = supplier.willCome.getDate()
         continue
       }
 
-      const nextCome = nextSupplier.willCome.getTime()
+      const nextCome = nextSupplier.willCome.getTime() // second supplier for checking interval
       // main checking
       const mainInterval = nextCome - previousLeave
       if (mainInterval >= time) {
@@ -103,7 +107,7 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
           canLeave: nextSupplier.willCome.toISOString(),
         })
       }
-      isIntervalValid(mainInterval)
+      isIntervalValid(mainInterval, supplier.id, nextSupplier.id)
       lastDate = supplier.willCome.getDate()
     }
 
@@ -118,7 +122,10 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
       },
     } satisfies IResponseWithData<IDataOfSlots>
   } catch (error) {
-    console.error(error)
+    console.error(
+      `[${new Date().toISOString()} - ERROR] Something is wrong in find-slots service: `,
+      error,
+    )
     return {
       message: 'Error occurred while finding available slots',
       status: 500,

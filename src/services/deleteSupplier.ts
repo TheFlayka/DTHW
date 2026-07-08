@@ -1,12 +1,12 @@
+// prisma
 import { prisma } from '../lib/prisma'
+// types
 import type { IResponse } from '../routes'
 
 export async function deleteSupplier(id: number) {
   try {
     const supplier = await prisma.suppliers.findFirst({
-      where: {
-        id: id,
-      },
+      where: { id },
     })
     if (!supplier) {
       return {
@@ -17,7 +17,7 @@ export async function deleteSupplier(id: number) {
       } satisfies IResponse
     }
 
-    await prisma.suppliers.delete({ where: { id: id } })
+    await prisma.suppliers.delete({ where: { id } })
 
     return {
       message: 'Supplier was deleted',
@@ -26,7 +26,10 @@ export async function deleteSupplier(id: number) {
       timestamp: new Date().toISOString(),
     } satisfies IResponse
   } catch (error) {
-    console.error(error)
+    console.error(
+      `[${new Date().toISOString()} - ERROR] Something is wrong in delete-supplier service: `,
+      error,
+    )
     return {
       message: 'Error occurred while deleting supplier',
       status: 500,

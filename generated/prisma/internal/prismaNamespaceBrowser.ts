@@ -51,7 +51,6 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Docks: 'Docks',
   Suppliers: 'Suppliers'
 } as const
 
@@ -69,14 +68,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
-
-
-export const DocksScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
-} as const
-
-export type DocksScalarFieldEnum = (typeof DocksScalarFieldEnum)[keyof typeof DocksScalarFieldEnum]
 
 
 export const SuppliersScalarFieldEnum = {

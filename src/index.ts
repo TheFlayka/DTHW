@@ -6,7 +6,7 @@ import { Hono } from 'hono'
 import type { HonoBase } from 'hono/hono-base'
 const app: HonoBase = new Hono()
 
-// Routes of project(MVP stage!)
+// Routes of project
 import BaseRoutes from './routes.js'
 app.route('/api', BaseRoutes)
 

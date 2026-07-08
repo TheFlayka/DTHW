@@ -1,12 +1,13 @@
+// prisma
 import { prisma } from '../lib/prisma'
-import type { IResponse, IResponseWithData, ISupplier } from '../routes'
+// types
+import type { IResponse, IResponseWithData } from '../routes'
+import type { ISupplier } from '#shared/types'
 
 export async function getSupplier(id: number) {
   try {
     const supplier = await prisma.suppliers.findFirst({
-      where: {
-        id: id,
-      },
+      where: { id },
     })
     if (!supplier) {
       return {
@@ -16,13 +17,12 @@ export async function getSupplier(id: number) {
         timestamp: new Date().toISOString(),
       } satisfies IResponse
     }
+    const { willCome, willLeave, ...otherInformation } = supplier
     const dataSupplier: ISupplier = {
-      id: supplier.id,
-      name: supplier.name,
-      willCome: supplier.willCome.toISOString(),
-      willLeave: supplier.willLeave.toISOString(),
-      timeSpent: supplier.timeSpent,
-    }
+      ...otherInformation,
+      willCome: willCome.toISOString(),
+      willLeave: willLeave.toISOString(),
+    } // TS require to set string(Prisma return Date like in schemas, but for response it has to be ISO string)
 
     return {
       message: 'Found supplier',
@@ -32,7 +32,10 @@ export async function getSupplier(id: number) {
       data: dataSupplier,
     } satisfies IResponseWithData<ISupplier>
   } catch (error) {
-    console.error(error)
+    console.error(
+      `[${new Date().toISOString()} - ERROR] Something is wrong in get-supplier service: `,
+      error,
+    )
     return {
       message: 'Error occurred while getting supplier',
       status: 500,

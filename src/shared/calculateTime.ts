@@ -3,4 +3,4 @@ export function calculateTimeSpentInDock(countOfBoxes: number) {
 }
 
 // 300000 ms - 5 minutes, so every box will bring about 5 minutes
-// and additional 10 minutes(600000 ms) for entering and leaving dock of warehouse
+// and additional 10 minutes(600000 ms) for entering and leaving dock
