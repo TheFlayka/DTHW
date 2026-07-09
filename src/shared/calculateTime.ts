@@ -1,4 +1,7 @@
 export function calculateTimeSpentInDock(countOfBoxes: number) {
+  if (countOfBoxes < 1 || countOfBoxes > 120) {
+    return 0
+  }
   return countOfBoxes * 300000 + 600000
 }
 

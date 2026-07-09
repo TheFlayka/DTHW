@@ -1,1 +1,4 @@
 smol=true # minimize usage of memory
+
+[test]
+root = "src/tests"
