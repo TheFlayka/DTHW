@@ -11,7 +11,7 @@ interface ISlot {
   canLeave: string
 }
 
-interface IDataOfSlots {
+export interface IDataOfSlots {
   slots: Array<ISlot>
   timeSpent: number
 }
@@ -31,13 +31,21 @@ function isIntervalValid(interval: number, id1: number, id2?: number) {
 export async function findSlots(countOfBoxes: number, startDate: string, endDate: string) {
   try {
     const time = calculateTimeSpentInDock(countOfBoxes) // get time spent in the dock
+    if (time === 0) {
+      return {
+        message: 'Count of boxes incorrect! Please, check data!',
+        status: 400,
+        success: false,
+        timestamp: new Date().toISOString(),
+      } satisfies IResponse
+    }
 
     // Getting all suppliers between startDate and endDAte
     const suppliers = await prisma.suppliers.findMany({
       where: {
         willCome: {
           gte: `${startDate.split('T')[0]}T00:00:00.000Z`,
-          lte: new Date(endDate),
+          lte: `${endDate.split('T')[0]}T23:59:59.000Z`,
         },
       },
       orderBy: {
@@ -73,10 +81,10 @@ export async function findSlots(countOfBoxes: number, startDate: string, endDate
             canCome: `${supplier.willCome.toISOString().split('T')[0]}T03:00:00.000Z`,
             canLeave: supplier.willCome.toISOString(),
           })
+          lastDate = supplier.willCome.getDate()
         }
         isIntervalValid(intervalBeforeFirstSupplier, supplier.id)
         lastDate = supplier.willCome.getDate()
-        continue
       }
 
       const previousLeave = supplier.willLeave.getTime() // first supplier for checking interval
